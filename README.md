@@ -1,6 +1,10 @@
 # qb-skillbar
 Skill Bar For QB-Core
 
+Due to issues with revised versions of qb-skillbar, I upload the latest stable version I use in development and which has not caused me issues. 
+
+I did not create this resource nor do I intend on updating it. 
+
 # License
 
     QBCore Framework
