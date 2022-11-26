@@ -29,7 +29,7 @@ end)
 
 Skillbar.Start = function(data, success, fail)
     if not Skillbar.Data.Active then
-        BarLoop()
+        Skillbar.Data.Active = true
         if success ~= nil then
             successCb = success
         end
@@ -51,9 +51,9 @@ Skillbar.Start = function(data, success, fail)
 end
 
 Skillbar.Repeat = function(data)
-    BarLoop()
+    Skillbar.Data.Active = true
     Skillbar.Data.Data = data
-    CreateThread(function()
+    Citizen.CreateThread(function()
         Wait(500)
         SendNUIMessage({
             action = "start",
@@ -64,23 +64,19 @@ Skillbar.Repeat = function(data)
     end)
 end
 
-function BarLoop()
-    if not Skillbar.Data.Active then
-        Skillbar.Data.Active = true
-        CreateThread(function()
-            while Skillbar.Data.Active do
-                if IsControlJustPressed(0, 38) then
-                    SendNUIMessage({
-                        action = "check",
-                        data = Skillbar.Data.Data,
-                    })
-                    break
-                end
-                Wait(1)
+CreateThread(function()
+    while true do
+        if Skillbar.Data.Active then
+            if IsControlJustPressed(0, 38) then
+                SendNUIMessage({
+                    action = "check",
+                    data = Skillbar.Data.Data,
+                })
             end
-        end)
+        end
+        Wait(1)
     end
-end
+end)
 
 function GetSkillbarObject()
     return Skillbar
